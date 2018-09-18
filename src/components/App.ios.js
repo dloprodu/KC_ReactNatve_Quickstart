@@ -2,30 +2,32 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { Router, Scene, Stack, Actions } from 'react-native-router-flux';
 import { Houses, Characters } from './sections';
+import * as api from '../api';
 
 type Props = {};
 export default class App extends Component<Props> {
     constructor(props) {
         super(props);
         
-        this.state = {
-            backgroundColor: 'blue',
-            height: 80
-        };
+        // this.state = {
+        //     backgroundColor: 'blue',
+        //     height: 80
+        // };
     }
 
     componentWillMount() {
-        //this.setState({ backgroundColor: 'lime', title: 'Valor cambiado en componentWillMount' })
+        // this.setState({ backgroundColor: 'lime', title: 'Valor cambiado en componentWillMount' })
+        api.configureAxios();
     }
 
-    componentDidMount() {
-        setTimeout( () => {
-            this.setState({
-                backgroundColor: 'red',
-                title: 'Valor cambiado en componentDidMount'
-            })
-        }, 5000)
-    }
+    // componentDidMount() {
+    //     setTimeout( () => {
+    //         this.setState({
+    //             backgroundColor: 'red',
+    //             title: 'Valor cambiado en componentDidMount'
+    //         })
+    //     }, 5000)
+    // }
 
     render() {
         return (
