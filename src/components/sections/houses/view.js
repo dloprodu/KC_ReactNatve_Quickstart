@@ -11,7 +11,8 @@ export default class Houses extends Component {
         super(props);
 
         this.state = {
-            houseList: []
+            houseList: [],
+            selected: null
         };
     }
 
@@ -31,11 +32,17 @@ export default class Houses extends Component {
     }
 
     _onHouseTapped(house) {
-        Actions.characters();
+        this.setState({selected: house});
+        // Actions.characters();
     }
 
     _renderItem({ item, index }) {
-        return <HouseCell house={item} onPress={(house) => this._onHouseTapped(house)}/>
+        return (
+            <HouseCell 
+                house={item} 
+                onPress={(house) => this._onHouseTapped(house)} 
+                selected={this.state.selected}/>
+            )
     }
 
     render() {
@@ -49,6 +56,7 @@ export default class Houses extends Component {
                 */}
                 <FlatList
                     data={this.state.houseList}
+                    extraData={this.state}
                     renderItem={ value => this._renderItem(value) }
                     keyExtractor={ (item, i) => `cell${item.id}` }
                     />
@@ -58,17 +66,26 @@ export default class Houses extends Component {
 }
 
 class HouseCell extends PureComponent {
-    static defaultsProps = {
+    static defaultProps = {
         house: null,
-        onPress: () => {}
+        selected: null,
+        onPress: () => {},
+        backgroundColor: 'green',
+        selectedBackgroundColor: 'lime'
     }
 
     render() {
-        const { house } = this.props;
+        const { house, selected } = this.props;
         const name = house && house.nombre || 'Sin nombre';
+        const isSelected = selected && selected.id === house.id;
+        const backgroundColor = isSelected 
+            ? { backgroundColor: this.props.selectedBackgroundColor, borderColor: 'orange' }
+            : { backgroundColor: this.props.backgroundColor };
 
         return (
-            <TouchableOpacity onPress={() => this.props.onPress(house)} style={{height: 120, borderWidth: 1, borderColor: 'blue', alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableOpacity 
+                onPress={() => this.props.onPress(house)} 
+                style={[{height: 120, borderWidth: 1, borderColor: 'blue', alignItems: 'center', justifyContent: 'center'}, backgroundColor]}>
                 <Text style={{with: '100%'}}>{name}</Text>
             </TouchableOpacity>
         )
