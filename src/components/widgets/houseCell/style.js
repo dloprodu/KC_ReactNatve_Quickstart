@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+const { height, width } = Dimensions.get('window')
 
 export default StyleSheet.create({
     cellContainer: {
-        height: 120, 
-        borderWidth: 1, 
-        borderColor: 'blue', 
-        alignItems: 'center', 
-        justifyContent: 'center' 
+        height: 280, 
+        width: '50%',
+        backgroundColor: 'rgb(24,24,24)'
     }
 })

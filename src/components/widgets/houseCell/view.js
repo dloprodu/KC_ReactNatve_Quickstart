@@ -1,33 +1,29 @@
-import React, { PureComponent } from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import React, { Component } from 'react'
+import { TouchableOpacity, Image } from 'react-native'
 
 import style from './style';
 
-export default class HouseCell extends PureComponent {
+export default class HouseCell extends Component {
     static defaultProps = {
         house: null,
-        selected: null,
         onPress: () => {},
-        backgroundColor: 'green',
-        selectedBackgroundColor: 'lime'
     }
 
     render() {
         const { house, selected } = this.props;
-        const name = house && house.nombre || 'Sin nombre';
-        const isSelected = selected && selected.id === house.id;
-        const backgroundColor = isSelected 
-            ? { backgroundColor: this.props.selectedBackgroundColor, borderColor: 'orange' }
-            : { backgroundColor: this.props.backgroundColor };
 
         return (
             <TouchableOpacity 
+                activeOpacity={0.3}
                 onPress={() => this.props.onPress(house)} 
                 style={[
-                    style.cellContainer, 
-                    backgroundColor
+                    style.cellContainer
                 ]}>
-                <Text style={{with: '100%'}}>{name}</Text>
+                <Image 
+                    source={{ uri: house.image_dir }} 
+                    style={{ width: '100%', height: '100%' }}
+                    esizeMode={'cover'}
+                     />
             </TouchableOpacity>
         )
     }
