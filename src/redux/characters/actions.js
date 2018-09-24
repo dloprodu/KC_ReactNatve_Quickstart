@@ -1,47 +1,51 @@
 import * as types from './types';
-import * as api from '../../api';
 
-function setFetching(value) {
+export function setFetching(value) {
     return {
-        type: types.HOUSES_SET_FETCHING,
-        value: value
+        type: types.CHARACTERS_SET_FETCHING,
+        value
     };
 }
 
 export function setList(value) {
     return {
-        type: types.HOUSES_UPDATE_LIST,
+        type: types.CHARACTERS_UPDATE_LIST,
         value
     };
 }
 
 export function setItem(value) {
     return {
-        type: types.HOUSES_SET_ITEM,
+        type: types.CHARACTERS_SET_ITEM,
         value
     };
 }
 
-export function fetchHousesList() {
-    return (dispatch, getState) => {
-        console.log('getState: ', getState());
+export function fetchHouseCharacters() {
+    return (dispatch, getState, api) => {
+        console.log(getState().houses)
+        const house = getState().houses.item;
+
+        if (!house) {
+            return;
+        }
 
         dispatch( setFetching(true) );
 
         api
-            .fecthHouses()
+            .fetchCharacters(house.id)
             .then( res => {
                 dispatch( setFetching(false) );
                 if (!res || !res.data || !res.data.records) {
                     dispatch( setList([]) );
-                    return
+                    return;
                 }
 
                 dispatch( setList( res.data.records ) );
             })
             .catch( err => {
                 dispatch( setFetching(false) );
-                console.log('fetchHouses error: ', err);
+                console.log('fetchCharacters error: ', err);
             });
     };
 }

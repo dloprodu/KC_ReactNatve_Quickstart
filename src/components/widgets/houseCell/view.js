@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, Image } from 'react-native'
 
-import style from './style';
+import style from './styles';
 
 export default class HouseCell extends Component {
     static defaultProps = {
