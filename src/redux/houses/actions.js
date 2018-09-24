@@ -24,6 +24,8 @@ export function setItem(value) {
 
 export function fetchHousesList() {
     return (dispatch, getState) => {
+        console.log('getState: ', getState());
+
         dispatch( setFetching(true) );
 
         api
