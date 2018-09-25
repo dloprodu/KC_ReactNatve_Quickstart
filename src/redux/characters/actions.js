@@ -30,6 +30,7 @@ export function fetchHouseCharacters() {
             return;
         }
 
+        dispatch( setList([]) );
         dispatch( setFetching(true) );
 
         api
@@ -37,7 +38,6 @@ export function fetchHouseCharacters() {
             .then( res => {
                 dispatch( setFetching(false) );
                 if (!res || !res.data || !res.data.records) {
-                    dispatch( setList([]) );
                     return;
                 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import styles from './styles';
 
@@ -14,7 +15,7 @@ class Characters extends Component {
     }
 
     _renderItem(character, index) {
-        return <CharacterCell character={character} />
+        return <CharacterCell character={character} onPress={this.props.onCharacterTapped} />
     }
 
     render() {
@@ -43,6 +44,10 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchHouseCharacters: () => {
             dispatch( CharacterActions.fetchHouseCharacters() )
+        },
+        onCharacterTapped: (character) => {
+            dispatch( CharacterActions.setItem(character) )
+            Actions.characterDetail( {title: character.nombre} );
         }
     }
 }

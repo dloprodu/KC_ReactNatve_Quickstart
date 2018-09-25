@@ -1,4 +1,5 @@
-import Houses from './houses/view';
-import Characters from './characters/view';
+import Houses from './houses';
+import Characters from './characters';
+import CharacterDetail from './characterDetail';
 
-export { Houses, Characters }
+export { Houses, Characters, CharacterDetail }
