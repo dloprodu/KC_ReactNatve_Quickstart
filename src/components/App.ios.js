@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, TouchableOpacity, Text } from 'react-native';
 import { Router, Scene, Stack, Actions } from 'react-native-router-flux';
-import { Houses, Characters, CharacterDetail } from './sections';
+import { Houses, Characters, CharacterDetail, CharacterAdd } from './sections';
 import * as api from '../api';
 
 import { createStore, applyMiddleware, combineReducers } from 'redux';
@@ -22,6 +22,12 @@ const sceneDefaultStules = {
     backButtonTintColor: 'white',
     titleStyle: { color: 'white'}
 }
+
+const RightButton = props => (
+    <TouchableOpacity style={{padding: 10}} onPress={() => { Actions.characterAdd() }}>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>{'Añadir'}</Text>
+    </TouchableOpacity>
+)
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -47,6 +53,7 @@ export default class App extends Component<Props> {
                         </Scene>
                         <Scene key="characters" 
                             component={Characters} 
+                            renderRightButton={RightButton}
                             title="Personajes" 
                             {...sceneDefaultStules}>
                         </Scene>
@@ -55,7 +62,12 @@ export default class App extends Component<Props> {
                             title="Character"
                             {...sceneDefaultStules}
                             >
-
+                        </Scene>
+                        <Scene key="characterAdd"
+                            component={CharacterAdd}
+                            title="Añadir"
+                            {...sceneDefaultStules}
+                            >
                         </Scene>
                     </Stack>
                 </Router>
