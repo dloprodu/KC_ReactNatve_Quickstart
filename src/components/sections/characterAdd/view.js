@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Button, TextInput } from '../../widgets/';
 
 import ImagePicker from 'react-native-image-picker';
@@ -23,6 +23,32 @@ export default class extends Component {
                 path: 'images'
             }
         };
+    }
+
+    _validateForm() {
+        const { name, age, image } = this.state
+
+        if (name && age && image && image.data) {
+            return true;
+        }
+
+        return false;
+    }
+
+    _onSubmit() {
+        if (!this._validateForm()) {
+            Alert.alert('Atención', 'Complete todos los campos');
+            return;
+        }
+
+        const { name, age, image } = this.state;
+        const data = {
+            nombre: name,
+            edad: age,
+            image: image.data
+        }
+
+        this.props.onSubmitCharacter(data);
     }
 
     _onImagePickerTapped() {
@@ -93,7 +119,10 @@ export default class extends Component {
                 </View>
 
                 <View style={{paddingHorizontal: 20, paddingBottom: 20}}>
-                    <Button label={'Guardar'.toUpperCase()} />
+                    <Button 
+                        label={'Guardar'.toUpperCase()} 
+                        isFetching={this.props.isFetching} 
+                        onPress={() => this._onSubmit()} />
                 </View>
             </View>
         )

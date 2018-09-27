@@ -1,4 +1,5 @@
 import * as types from './types';
+import { Actions } from 'react-native-router-flux';
 
 export function setFetching(value) {
     return {
@@ -42,6 +43,41 @@ export function fetchHouseCharacters() {
                 }
 
                 dispatch( setList( res.data.records ) );
+            })
+            .catch( err => {
+                dispatch( setFetching(false) );
+                console.log('fetchCharacters error: ', err);
+            });
+    };
+}
+
+export function postHouseCharacter(data) {
+    return (dispatch, getState, api) => {
+        if (!data) {
+            return;
+        }
+
+        const house = getState().houses.item;
+
+        if (!house) {
+            return;
+        }
+
+        const characterData = {
+            ...data,
+            casa: house.id
+        };
+
+        dispatch( setFetching(true) );
+
+        api
+            .postHouseCharacter(characterData)
+            .then( res => {
+                dispatch( setFetching(false) );
+   
+                dispatch( fetchHouseCharacters() );
+
+                Actions.pop();
             })
             .catch( err => {
                 dispatch( setFetching(false) );

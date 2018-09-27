@@ -16,3 +16,8 @@ export function fetchCharacters(houseId) {
     const url = `/personajes?casa=${houseId}`;
     return axios.get(url);
 }
+
+export function postHouseCharacter(data) {
+    const url = '/personajes';
+    return axios.post(url, data);
+}
